@@ -1,0 +1,45 @@
+# 回归与聚类算法
+## 线性回归
+- 线性回归应用场景
+	- 房价预测
+	- 销售额度预测
+	- 金融： 贷款额度预测， 利用线性回归以及系数分析因子
+- 什么是线性回归？
+	- 线性回归是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种分析方式。
+	- 特点： 只有一个自变量的情况称为单变量回归， 大于一个自变量情况的叫做多元回归
+- 损失函数
+	- 在线性回归的基础上， 对线性回归上加以优化，找到最优的那条线。
+		- 是点到线之间最小的距离加起来的总和
+- API
+	- sklearn.linear_model.LinearRegression(fit_intercept=True)
+		- fit_intercept 是否计算偏置
+		- LinearRegression.conf_ 回归系数
+		- LinearRegression.interrecept 偏置
+	- sklearn.linear_model.SGDRegressor(loss='squared_loss', fit_intercept=True, learning_rare='invscaling', eta0=0.01)
+		- SGDRegressor类实现了随机梯度下降学习，它支持不同的loss函数和正则化惩罚项来拟合线性回归模型。
+		- loss:损失类型
+			- loss=”squared_loss”: 普通最小二乘法
+		- fit_intercept：是否计算偏置
+		- learning_rate : string, optional
+		- 学习率填充
+			-'constant': eta = eta0
+			- 'optimal': eta = 1.0 / (alpha * (t + t0)) [default]
+			- 'invscaling': eta = eta0 / pow(t, power_t)
+			- power_t=0.25:存在父类当中
+			- 对于一个常数值的学习率来说，可以使用learning_rate=’constant’ ，并使用eta0来指定学习率。
+		- SGDRegressor.coef_：回归系数
+		- SGDRegressor.intercept_：偏置
+- 关于优化方法GD、SGD、SAG
+	- GD
+		- 梯度下降(Gradient Descent)，原始的梯度下降法需要计算所有样本的值才能够得出梯度，计算量大，所以后面才有会一系列的改进。
+	- SGD
+		- 随机梯度下降(Stochastic gradient descent)是一个优化方法。它在一次迭代时只考虑一个训练样本。
+		- SGD的优点是：高效， 容易实现
+		- SGD的缺点是：SGD需要许多超参数：比如正则项参数、迭代数。SGD对于特征标准化是敏感的。
+	- SAG：
+		- 随机平均梯度法(Stochasitc Average Gradient)，由于收敛的速度太慢，有人提出SAG等基于梯度下降的算法
+		- Scikit-learn：SGDRegressor、岭回归、逻辑回归等当中都会有SAG优化
+- 欠拟合与过拟合
+	- 定义
+		- 过拟合：一个假设在训练数据上能够获得比其他假设更好的拟合， 但是在测试数据集上却不能很好地拟合数据，此时认为这个假设出现了过拟合的现象。(模型过于复杂)
+		- 欠拟合：一个假设在训练数据上不能获得更好的拟合，并且在测试数据集上也不能很好地拟合数据，此时认为这个假设出现了欠拟合的现象。(模型过于简单)
